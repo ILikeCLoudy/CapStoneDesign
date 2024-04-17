@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 public class ResponseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long ID;
 
     @Column
     private String Person;
@@ -28,62 +28,62 @@ public class ResponseEntity {
     @Column
     private String MBTI;
 
-    @Column
-    private String Bigdata1;
-    @Column
-    private String Bigdata2;
-    @Column
-    private String Bigdata3;
-    @Column
-    private String Bigdata4;
-    @Column
-    private String Bigdata5;
-    @Column
-    private String Bigdata6;
-    @Column
-    private String Bigdata7;
-    @Column
-    private String Bigdata8;
-    @Column
-    private String Bigdata9;
+    @Column(nullable = false)
+    private int Bigdata1;
+    @Column(nullable = false)
+    private int Bigdata2;
+    @Column(nullable = false)
+    private int Bigdata3;
+    @Column(nullable = false)
+    private int Bigdata4;
+    @Column(nullable = false)
+    private int Bigdata5;
+    @Column(nullable = false)
+    private int Bigdata6;
+    @Column(nullable = false)
+    private int Bigdata7;
+    @Column(nullable = false)
+    private int Bigdata8;
+    @Column(nullable = false)
+    private int Bigdata9;
 
-    @Column
-    private String MedicalMG1;
-    @Column
-    private String MedicalMG2;
-    @Column
-    private String MedicalMG3;
-    @Column
-    private String MedicalMG4;
-    @Column
-    private String MedicalMG5;
-    @Column
-    private String MedicalMG6;
-    @Column
-    private String MedicalMG7;
-    @Column
-    private String MedicalMG8;
-    @Column
-    private String MedicalMG9;
+    @Column(nullable = false)
+    private int MedicalMG1;
+    @Column(nullable = false)
+    private int MedicalMG2;
+    @Column(nullable = false)
+    private int MedicalMG3;
+    @Column(nullable = false)
+    private int MedicalMG4;
+    @Column(nullable = false)
+    private int MedicalMG5;
+    @Column(nullable = false)
+    private int MedicalMG6;
+    @Column(nullable = false)
+    private int MedicalMG7;
+    @Column(nullable = false)
+    private int MedicalMG8;
+    @Column(nullable = false)
+    private int MedicalMG9;
 
-    @Column
-    private String MedicalEG1;
-    @Column
-    private String MedicalEG2;
-    @Column
-    private String MedicalEG3;
-    @Column
-    private String MedicalEG4;
-    @Column
-    private String MedicalEG5;
-    @Column
-    private String MedicalEG6;
-    @Column
-    private String MedicalEG7;
-    @Column
-    private String MedicalEG8;
-    @Column
-    private String MedicalEG9;
+    @Column(nullable = false)
+    private int MedicalEG1;
+    @Column(nullable = false)
+    private int MedicalEG2;
+    @Column(nullable = false)
+    private int MedicalEG3;
+    @Column(nullable = false)
+    private int MedicalEG4;
+    @Column(nullable = false)
+    private int MedicalEG5;
+    @Column(nullable = false)
+    private int MedicalEG6;
+    @Column(nullable = false)
+    private int MedicalEG7;
+    @Column(nullable = false)
+    private int MedicalEG8;
+    @Column(nullable = false)
+    private int MedicalEG9;
 
 
 
