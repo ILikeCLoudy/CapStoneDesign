@@ -1,15 +1,20 @@
 package com.EuljiUniv.CapstoneDesign.Controller;
 
+import com.EuljiUniv.CapstoneDesign.Entity.ResponseEntity;
+import com.EuljiUniv.CapstoneDesign.Service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class MainController {
+    private final ResponseService responseService;
     //private final {ServiceName} {ServiceMethod}
 
     @GetMapping("/")
@@ -17,15 +22,38 @@ public class MainController {
         return "index";
     }
 
-    /*@GetMapping("/{survey}/{survey}")
+    @GetMapping("/{survey}")
       public String getSurvey() {
         return "survey";
       }
-     */
 
-    /*@ResponseBody
+    @ResponseBody
     @PostMapping("/answer")
-    Response에 따른 반응형 설계 자리
-    */
+    public HashMap<String, String> getAnswer(@RequestBody ResponseEntity responseEntity) {
+        responseEntity.setResult(0000);
+        responseService.insertdata(responseEntity);
+        HashMap<String, String> result = new HashMap<>();
+        try {
+            String[] command = new String[] {"주피터 또는 파이썬 주소 연결자리"};
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            System.out.println("\nForceExit by ErrorCode = "+exitCode); //파이썬 연산종료후 DB에서 결과값 수신
+
+            //ResponseEntity responseEntitysec = responseService.response(); //DB 호출
+
+            //result.put("Person", responseEntitysec.getPerson());
+            result.put("None", "INT"); //초기값 지정
+
+            //result.put("type", PageSet.Page_SET.get(String.format("%d",responseEntitysec.getResult())));
+            //PageSet은 초기미구현 상태 배치 + 향후 GPT 및 ML 연동 활성화시 고려
+        }
+        catch (Exception e) {
+            System.out.println("\n ForceExit by ErrorCode = "+e.getMessage());
+        }
+        finally {
+            return result;
+        }
+    }
 }
 
