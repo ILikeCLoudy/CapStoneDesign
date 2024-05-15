@@ -5,17 +5,20 @@ import com.EuljiUniv.CapstoneDesign.Repository.ResponseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ResponseService {
     private final ResponseRepository responseRepository;
 
     public void insertdata(ResponseEntity responseEntity) {
-        //responseRepository.save(responseEntity);
+        responseRepository.save(responseEntity);
     }
 
-    /*public ResponseEntity response() {
-        ResponseEntity responseEntity = responseRepository.findById();
-        return responseEntity;
-    }*/
+    public ResponseEntity response() {
+        long x = 100;
+        Optional<ResponseEntity> responseEntity = responseRepository.findById(x);
+        return responseEntity.orElse(null);
+    }
 }
