@@ -29,61 +29,40 @@ public class ResponseEntity {
     private String MBTI;
 
     @Column(nullable = false)
-    private int Bigdata1;
+    private int Interest1;
     @Column(nullable = false)
-    private int Bigdata2;
+    private int Interest2;
     @Column(nullable = false)
-    private int Bigdata3;
+    private int Interest3;
     @Column(nullable = false)
-    private int Bigdata4;
+    private int Interest4;
     @Column(nullable = false)
-    private int Bigdata5;
-    @Column(nullable = false)
-    private int Bigdata6;
-    @Column(nullable = false)
-    private int Bigdata7;
-    @Column(nullable = false)
-    private int Bigdata8;
-    @Column(nullable = false)
-    private int Bigdata9;
+    private int Interest5;
 
     @Column(nullable = false)
-    private int MedicalMG1;
+    private int MajorLike1;
     @Column(nullable = false)
-    private int MedicalMG2;
+    private int MajorLike2;
     @Column(nullable = false)
-    private int MedicalMG3;
+    private int MajorLike3;
     @Column(nullable = false)
-    private int MedicalMG4;
+    private int MajorLike4;
     @Column(nullable = false)
-    private int MedicalMG5;
-    @Column(nullable = false)
-    private int MedicalMG6;
-    @Column(nullable = false)
-    private int MedicalMG7;
-    @Column(nullable = false)
-    private int MedicalMG8;
-    @Column(nullable = false)
-    private int MedicalMG9;
+    private int MajorLike5;
 
     @Column(nullable = false)
-    private int MedicalEG1;
+    private int  Job_Employ1;
     @Column(nullable = false)
-    private int MedicalEG2;
+    private int Job_Employ2;
     @Column(nullable = false)
-    private int MedicalEG3;
+    private int Job_Employ3;
     @Column(nullable = false)
-    private int MedicalEG4;
+    private int Job_Employ4;
     @Column(nullable = false)
-    private int MedicalEG5;
-    @Column(nullable = false)
-    private int MedicalEG6;
-    @Column(nullable = false)
-    private int MedicalEG7;
-    @Column(nullable = false)
-    private int MedicalEG8;
-    @Column(nullable = false)
-    private int MedicalEG9;
+    private int Job_Employ5;
+
+    @Column
+    private int Result;
 
 
 

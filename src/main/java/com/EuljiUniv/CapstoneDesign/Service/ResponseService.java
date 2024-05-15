@@ -14,9 +14,8 @@ public class ResponseService {
         //responseRepository.save(responseEntity);
     }
 
-   /* public ResponseEntity response() {
-        //ResponseEntity responseEntity = responseRepository.findBy();
-        //findby는 정의 미구현으로 인해  보류건
-        //return responseEntity;
+    /*public ResponseEntity response() {
+        ResponseEntity responseEntity = responseRepository.findById();
+        return responseEntity;
     }*/
 }
