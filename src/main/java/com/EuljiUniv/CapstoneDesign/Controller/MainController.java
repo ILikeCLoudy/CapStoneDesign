@@ -40,9 +40,9 @@ public class MainController {
             int exitCode = process.waitFor();
             System.out.println("\nForceExit by ErrorCode = "+exitCode); //파이썬 연산종료후 DB에서 결과값 수신
 
-            //ResponseEntity responseEntitysec = responseService.response(); //DB 호출
+            ResponseEntity responseEntitysec = responseService.response(); //DB 호출
 
-            //result.put("Person", responseEntitysec.getPerson());
+            result.put("Person", responseEntitysec.getPerson());
             result.put("None", "INT"); //초기값 지정
 
             //result.put("type", PageSet.Page_SET.get(String.format("%d",responseEntitysec.getResult())));
