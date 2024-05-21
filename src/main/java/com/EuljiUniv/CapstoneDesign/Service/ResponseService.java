@@ -17,7 +17,6 @@ public class ResponseService {
     }
 
     public ResponseEntity response(Long id) {
-        //long x = 100;
         Optional<ResponseEntity> responseEntity = responseRepository.findById(id);
         return responseEntity.orElse(null);
     }
