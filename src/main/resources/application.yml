@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: leejy
+    username: root
     password: '0719'
     url: jdbc:mysql://localhost:3302/capstone
   thymeleaf:
@@ -15,8 +15,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
-spring.jpa.properties.hibernate.hibernate.dialect: org.hibernate.dialect.MySQLDialect
-
-
-
-

@@ -24,14 +24,14 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/survey")
+    /*@GetMapping("/survey")
       public String getSurvey() {
         return "survey";
-      }
+      }*/
 
     @ResponseBody
-    @PostMapping("/answer")
-    public HashMap<String, String> getAnswer(@RequestBody ResponseEntity responseEntity) {
+    @PostMapping("/survey")
+    public HashMap<String, String> getSurvey(@RequestBody ResponseEntity responseEntity) {
         responseEntity.setResult(0000);
         responseService.insertdata(responseEntity);
         HashMap<String, String> result = new HashMap<>();
