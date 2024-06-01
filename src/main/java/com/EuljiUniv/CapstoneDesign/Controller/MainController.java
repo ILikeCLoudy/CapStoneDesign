@@ -110,12 +110,12 @@ public class MainController {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonInput = null;
         try {
-            jsonInput = objectMapper.writeValueAsString(saveds);
+            jsonInput = objectMapper.writeValueAsString(surveyJson);
         }catch (IOException e) {
             e.printStackTrace();
         }
 
-        String[] command = {"python, pythonScriptPath, jsonInput"};
+        String[] command = {"python", pythonScriptPath, jsonInput};
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process process = processBuilder.start();
@@ -129,13 +129,28 @@ public class MainController {
                 // 여기서는 정수로 변환하여 저장
                 processedValue = Integer.parseInt(line);
                 System.out.println("Processed value: " + processedValue);
+
+                SurveyEntity saveur = surveyService.updateResult(new ResultRequest(request.getStudentid(), processedValue));
+
             }
             int exitCode = process.waitFor();
+
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            while ((line = errorReader.readLine()) != null) {
+                System.out.println("Error : " + line);
+            }
+
             System.out.println("Exited with Code" + exitCode);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
+    /*@PutMapping("/survey/update")
+    public ResponseEntity<SurveyEntity> updateSurvey(@RequestBody ResultRequest request) {
+        SurveyEntity updateSurvey = surveyService.updateResult(request);
+        return ResponseEntity.ok()
+                .body(updateSurvey);
+    }*/
 
 /*    @PostMapping("/survey")
     public HashMap<String, String> getSurvey(@RequestBody PersonalEntity personalEntity) {
@@ -164,6 +179,6 @@ public class MainController {
         finally {
             return result;
         }
+<<<<<<< HEAD
     }*/
 }
-
