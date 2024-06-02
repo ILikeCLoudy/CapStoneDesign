@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 
 import java.io.BufferedReader;
@@ -72,12 +75,19 @@ public class MainController {
         }
         String surveyJson = convertToJson(saveds);
 
+        // python과 통신할때 json 형태로 보내려면 APPLICATION_JSON headers가 필요하다
+        //이게 없으면 415 error가 뜨면서 python이 데이터를 받아들이지 못한다
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> jsonInput = new HttpEntity<String>(surveyJson, headers);
+
+
         //파이썬 코드 작업공간 5/30 오후 작업할것
-        String pythonServerUrl = "http://localhost:5000/process";
-        ResponseEntity<Map> responseEntity = restTemplate.postForEntity(pythonServerUrl, surveyJson, Map.class);
+        String pythonServerUrl = "http://localhost:5000/test/pyflask";
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(pythonServerUrl, jsonInput, String.class);
         if (responseEntity.getStatusCode().is2xxSuccessful() && responseEntity.getBody() != null) {
-            Map<String, Object> result = responseEntity.getBody();
-            ResultRequest resultRequest = new ResultRequest(saveds.getStudentid(),(int) result.get("result"));
+            String result = responseEntity.getBody();
+            ResultRequest resultRequest = new ResultRequest(saveds.getStudentid(),Integer.parseInt(result));
             surveyService.updateResult(resultRequest);
             return ResponseEntity.ok("Survey submitted successfully.");
         } else {
@@ -105,7 +115,7 @@ public class MainController {
         }
         String surveyJson = convertToJson(saveds);
 
-        String pythonScriptPath = "C:\\Users\\LICL\\Desktop\\testmodel4\\testRunCode.py";
+        String pythonScriptPath = "C:\\cappython\\testRunCode.py";
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonInput = null;
