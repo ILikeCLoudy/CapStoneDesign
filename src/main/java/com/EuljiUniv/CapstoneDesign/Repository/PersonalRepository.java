@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface PersonalRepository extends JpaRepository<PersonalEntity, Long> {
     Optional<PersonalEntity> findByStudentid(String studentid);
+    PersonalEntity findFirstByStudentid(String studentid);
 }

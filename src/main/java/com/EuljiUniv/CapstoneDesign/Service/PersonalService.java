@@ -21,4 +21,8 @@ public class PersonalService {
     public Optional<PersonalEntity> findPersonalEntityByStudentid(String studentid) {
         return personalRepository.findByStudentid(studentid);
     }
+
+    public PersonalEntity findnewByStudentid(String studentid) {
+        return personalRepository.findFirstByStudentid(studentid);
+    }
 }
