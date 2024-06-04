@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RequestMapping("/")
@@ -50,7 +49,7 @@ public class MainController {
     public boolean addSurvey(@RequestBody AddPersonalRequest request) {
         try {
             PersonalEntity savedm = personalService.save(request.toPersonalEntity());
-        }catch (Exception e) {
+        } catch (Exception e) {
             PersonalEntity savedm = personalService.findPersonalEntityByStudentid(request.getStudentid()).orElseThrow(() -> new RuntimeException("회원정보가 존재하지 않습니다."));
         }
 
@@ -71,7 +70,7 @@ public class MainController {
         SurveyEntity saveds = surveyService.save(request.toSurveyEntity());
         try {
             PersonalEntity savedm = personalService.save(request.toPersonalEntity());
-        } catch(Exception e) {
+        } catch (Exception e) {
             PersonalEntity savedm = personalService.findPersonalEntityByStudentid(request.getStudentid()).orElseThrow(() -> new RuntimeException("회원정보가 존재하지 않습니다."));
         }
         String surveyJson = convertToJson(saveds);
@@ -88,7 +87,7 @@ public class MainController {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(pythonServerUrl, jsonInput, String.class);
         if (responseEntity.getStatusCode().is2xxSuccessful() && responseEntity.getBody() != null) {
             String result = responseEntity.getBody();
-            ResultRequest resultRequest = new ResultRequest(saveds.getStudentid(),Integer.parseInt(result));
+            ResultRequest resultRequest = new ResultRequest(saveds.getStudentid(), Integer.parseInt(result));
             surveyService.updateResult(resultRequest);
             return ResponseEntity.ok("Survey submitted successfully.");
         } else {
@@ -107,22 +106,22 @@ public class MainController {
     }
 
     @PostMapping("/survey/ver3")
-    public void test(@RequestBody AddPersonalRequest request) {
+    public AnswerRequest test(@RequestBody AddPersonalRequest request) {
         SurveyEntity saveds = surveyService.save(request.toSurveyEntity());
         try {
             PersonalEntity savedm = personalService.save(request.toPersonalEntity());
-        } catch(Exception e) {
+        } catch (Exception e) {
             PersonalEntity dm = personalService.findPersonalEntityByStudentid(request.getStudentid()).orElseThrow(() -> new RuntimeException("회원정보가 존재하지 않습니다."));
         }
         String surveyJson = convertToJson(saveds);
 
-        String pythonScriptPath = "C:\\cappython\\testRunCode.py";
+        String pythonScriptPath = "C:\\Users\\LICL\\Desktop\\testmodel4\\testRunCode.py";
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonInput = null;
         try {
             jsonInput = objectMapper.writeValueAsString(surveyJson);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -152,14 +151,18 @@ public class MainController {
             }
 
             System.out.println("Exited with Code" + exitCode);
+            ResultRequest resultRequest = new ResultRequest(request.getStudentid(), 0);
+            return sendAnswer(resultRequest);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return null;
     }
+
     @ResponseBody
-    @GetMapping("/answer")
-//    public AnswerRequest sendAnswer(@RequestBody SurveyEntity surveyEntity ) {
-    public AnswerRequest sendAnswer(@RequestBody ResultRequest a ) {
+    @PostMapping("/answer")
+    //    public AnswerRequest sendAnswer(@RequestBody SurveyEntity surveyEntity ) {
+    public AnswerRequest sendAnswer(@RequestBody ResultRequest a) {
 
         //SurveyEntity as = surveyService.findnewByStudentid(surveyEntity.getStudentid());
         SurveyEntity as = surveyService.findnewByStudentid(a.getStudentid());
@@ -175,26 +178,4 @@ public class MainController {
         return ar;
     }
 
-
-
-    @ResponseBody
-    @PostMapping("/answer/ver5")
-    public List<SurveyEntity> getAllSurveydata() {
-        List<SurveyEntity> answerdata = surveyService.findAll();
-        return answerdata;
-    }
-
-    @ResponseBody
-    @PostMapping("/answer/ver6")
-    public Object answer(@RequestBody ResultRequest request, Object answer) {
-        SurveyEntity resultrq = surveyService.findnewByStudentid(request.getStudentid());
-        convertToJson(resultrq);
-        return answer;
-    }
-
-/*    @ResponseBody
-    @PostMapping("/answer/ver7")
-    public HashMap<String, String> getAnswer(@RequestBody ) {
-        SurveyEntity answerrq = surveyService.findnewByStudentid()
-    }*/
 }
