@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class AddPersonalRequest {
-        private String person;
+        private String name;
 
         private String studentid;
 
@@ -39,7 +39,7 @@ public class AddPersonalRequest {
 
         public PersonalEntity toPersonalEntity(){
             return PersonalEntity.builder()
-                    .person(person)
+                    .name(name)
                     .studentid(studentid)
                     .sex(sex)
                     .major(major)

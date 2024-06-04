@@ -1,6 +1,7 @@
 package com.EuljiUniv.CapstoneDesign.Controller;
 
 import com.EuljiUniv.CapstoneDesign.DTO.AddPersonalRequest;
+import com.EuljiUniv.CapstoneDesign.DTO.AnswerRequest;
 import com.EuljiUniv.CapstoneDesign.DTO.ResultRequest;
 import com.EuljiUniv.CapstoneDesign.Entity.PersonalEntity;
 import com.EuljiUniv.CapstoneDesign.Entity.SurveyEntity;
@@ -24,9 +25,9 @@ import org.springframework.http.MediaType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Map;
-
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequestMapping("/")
@@ -155,40 +156,45 @@ public class MainController {
             e.printStackTrace();
         }
     }
-    /*@PutMapping("/survey/update")
-    public ResponseEntity<SurveyEntity> updateSurvey(@RequestBody ResultRequest request) {
-        SurveyEntity updateSurvey = surveyService.updateResult(request);
-        return ResponseEntity.ok()
-                .body(updateSurvey);
-    }*/
+    @ResponseBody
+    @GetMapping("/answer")
+//    public AnswerRequest sendAnswer(@RequestBody SurveyEntity surveyEntity ) {
+    public AnswerRequest sendAnswer(@RequestBody ResultRequest a ) {
 
-/*    @PostMapping("/survey")
-    public HashMap<String, String> getSurvey(@RequestBody PersonalEntity personalEntity) {
-        personalService.insertdata(personalEntity);
-        HashMap<String, String> result = new HashMap<>();
-        try {
-            String[] command = new String[] {"C:\\Users\\LICL\\Desktop\\졸업작품\\testmodel2"};
-            ProcessBuilder processBuilder = new ProcessBuilder(command);
-            Process process = processBuilder.start();
-            int exitCode = process.waitFor();
-            System.out.println("\nForceExit by ErrorCode = "+exitCode); //파이썬 연산종료후 DB에서 결과값 수신
+        //SurveyEntity as = surveyService.findnewByStudentid(surveyEntity.getStudentid());
+        SurveyEntity as = surveyService.findnewByStudentid(a.getStudentid());
+//        String pe = personalService.findPersonalEntityByStudentid(surveyEntity.getStudentid()).orElseThrow().getPerson();
+        String pe = personalService.findPersonalEntityByStudentid(a.getStudentid()).orElseThrow().getName();
 
-            PersonalEntity personalEntitysec = personalService.response(personalEntity.getID()); //DB 호출
+        //dohi
+        AnswerRequest ar =AnswerRequest.builder()
+                .name(pe)
+                .studentid(as.getStudentid())
+                .result(as.getResult())
+                .build();
+        return ar;
+    }
 
-            log.info(String.valueOf(personalEntity.getID()));
 
-            result.put("Person", personalEntitysec.getPerson());
-            result.put("None", "INT"); //초기값 지정
 
-            //result.put("type", PageSet.Page_SET.get(String.format("%d",responseEntitysec.getResult())));
-            //PageSet은 초기미구현 상태 배치 + 향후 GPT 및 ML 연동 활성화시 고려
-        }
-        catch (Exception e) {
-            System.out.println("\n ForceExit by ErrorCode = "+e.getMessage());
-        }
-        finally {
-            return result;
-        }
-<<<<<<< HEAD
+    @ResponseBody
+    @PostMapping("/answer/ver5")
+    public List<SurveyEntity> getAllSurveydata() {
+        List<SurveyEntity> answerdata = surveyService.findAll();
+        return answerdata;
+    }
+
+    @ResponseBody
+    @PostMapping("/answer/ver6")
+    public Object answer(@RequestBody ResultRequest request, Object answer) {
+        SurveyEntity resultrq = surveyService.findnewByStudentid(request.getStudentid());
+        convertToJson(resultrq);
+        return answer;
+    }
+
+/*    @ResponseBody
+    @PostMapping("/answer/ver7")
+    public HashMap<String, String> getAnswer(@RequestBody ) {
+        SurveyEntity answerrq = surveyService.findnewByStudentid()
     }*/
 }

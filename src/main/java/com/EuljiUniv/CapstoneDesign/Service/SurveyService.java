@@ -26,6 +26,10 @@ public class SurveyService {
         return surveyRepository.findAll();
     }
 
+    /*public List<SurveyEntity> findFirstByStudentid(String studentid) {
+        return surveyRepository.findFirstByStudentidOrderByIdDesc(studentid);
+    }*/
+
     public SurveyEntity findnewByStudentid(String studentid) {
         return surveyRepository.findFirstByStudentidOrderByIdDesc(studentid);
     }

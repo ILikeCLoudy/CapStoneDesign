@@ -14,7 +14,7 @@ public class PersonalEntity {
     private Long id;
 
     @Column
-    private String person;
+    private String name;
 
     @Column(unique = true)
     private String studentid;
@@ -29,8 +29,8 @@ public class PersonalEntity {
     private String mbti;
 
     @Builder
-    public PersonalEntity(String person,String studentid,String major,String sex, String mbti) {
-        this.person = person;
+    public PersonalEntity(String name,String studentid,String major,String sex, String mbti) {
+        this.name = name;
         this.studentid = studentid;
         this.sex = sex;
         this.major = major;
