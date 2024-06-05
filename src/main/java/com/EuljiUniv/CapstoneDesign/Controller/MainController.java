@@ -65,7 +65,7 @@ public class MainController {
     }
 
     @PostMapping("/survey/ver2")
-    public ResponseEntity<String> submitSurvey(@RequestBody AddPersonalRequest request) {
+    public ResponseEntity<AnswerRequest> submitSurvey(@RequestBody AddPersonalRequest request) {
 
         SurveyEntity saveds = surveyService.save(request.toSurveyEntity());
         try {
@@ -81,17 +81,18 @@ public class MainController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> jsonInput = new HttpEntity<String>(surveyJson, headers);
 
-
-        //파이썬 코드 작업공간 5/30 오후 작업할것
         String pythonServerUrl = "http://localhost:5000/test/pyflask";
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(pythonServerUrl, jsonInput, String.class);
         if (responseEntity.getStatusCode().is2xxSuccessful() && responseEntity.getBody() != null) {
             String result = responseEntity.getBody();
             ResultRequest resultRequest = new ResultRequest(saveds.getStudentid(), Integer.parseInt(result));
             surveyService.updateResult(resultRequest);
-            return ResponseEntity.ok("Survey submitted successfully.");
+
+            ResultRequest finalResultRequest = new ResultRequest(request.getStudentid(), Integer.parseInt(result));
+            AnswerRequest answer = sendAnswer(finalResultRequest);
+            return ResponseEntity.ok(answer);
         } else {
-            return ResponseEntity.status(500).body("Failed to submit survey.");
+            return ResponseEntity.status(500).body(null);
         }
     }
 
@@ -115,7 +116,7 @@ public class MainController {
         }
         String surveyJson = convertToJson(saveds);
 
-        String pythonScriptPath = "C:\\Users\\LICL\\Desktop\\testmodel4\\testRunCode.py";
+        String pythonScriptPath = "C:\\cappython\\testRunCode.py";
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonInput = null;
