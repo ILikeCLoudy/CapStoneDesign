@@ -5,7 +5,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: '0719'
+    password: '----'
     url: jdbc:mysql://localhost:3302/capstone
   thymeleaf:
     cache: false
