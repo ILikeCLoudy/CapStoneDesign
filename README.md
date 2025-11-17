@@ -218,6 +218,7 @@ python flask_server.py
 - 15차 변경: API 전체 완료, FE 연동 대기
 - 16차 변경: FE 통신 구현, ML 통합, Flask 통신 추가
 - survey/ver2 설문 응답 API 리팩토링 완료
+- 개발 환경 배포 환경 분리(ForServerCode branch)
 
 ## 라이선스
 
